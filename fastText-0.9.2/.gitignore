@@ -5,7 +5,9 @@
 *.bc
 .DS_Store
 data
-fasttext
+# Anchored so it only ignores the compiled CLI binary at this tree's root,
+# not the python package directory python/fasttext_module/fasttext/.
+/fasttext
 result
 website/node_modules/
 package-lock.json
