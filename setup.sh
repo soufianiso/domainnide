@@ -5,10 +5,23 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
+# fastText's C++ extension needs a compiler and make.
+for tool in g++ make; do
+    if ! command -v "$tool" >/dev/null 2>&1; then
+        echo "error: $tool is required to build fasttext" >&2
+        echo "hint: install build tools first, e.g. sudo apt install build-essential" >&2
+        exit 1
+    fi
+done
+
 python3 -m venv venv
 venv/bin/pip install --upgrade pip
-venv/bin/pip install nltk numpy
-venv/bin/pip install ./fastText-0.9.2
+# pybind11/setuptools/wheel are build prerequisites: fastText's setup.py
+# imports pybind11 while building, and pip's build isolation hides both
+# pybind11 and pip itself from it ("RuntimeError: pybind11 install failed.").
+# Pre-installing them and building with --no-build-isolation avoids that.
+venv/bin/pip install nltk numpy pybind11 setuptools wheel
+venv/bin/pip install --no-build-isolation ./fastText-0.9.2
 
 echo
 echo "Setup done. Try it:"
