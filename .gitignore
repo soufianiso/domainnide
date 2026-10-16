@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+
+# the venv is rebuilt per machine (see setup.sh)
+venv/
+
+# the 7 GB fastText model — auto-downloaded on first run, too big for git
+cc.en.300.bin
+
+# archives & build artifacts
+*.gz
+*.zip
+*.o
+fastText-0.9.2/tmp/
+
+# local test data & experiments (not part of the tool)
+/*.txt
+/*.tx
+sysnonym.py
+testwithdata.py
